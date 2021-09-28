@@ -2,12 +2,14 @@ package ru.sber.serialization
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
 
+@Disabled
 class JsonDeserializationTest {
     @Test
     fun `Имена свойств совпадают`() {

@@ -2,9 +2,11 @@ package ru.sber.serialization
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 
+@Disabled
 class JsonCustomClassDeserializer {
 
     @Test

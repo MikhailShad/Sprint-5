@@ -1,8 +1,10 @@
 package ru.sber.streams
 
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 
+@Disabled
 class StreamsTest {
 
     @Test
@@ -55,9 +57,9 @@ class StreamsTest {
     @Test
     fun getProductsOrderedByAllTest() {
         val shop = Shop("Test shop", listOf(
-                Customer("Alex", Moscow, listOf(Order(listOf(water, mango)), Order(listOf(bag)))),
-                Customer("Mary", Tula, listOf(Order(listOf(chocolate, bag)))),
-                Customer("Ivan", Perm, listOf(Order(listOf(water, bag)))),
+            Customer("Alex", Moscow, listOf(Order(listOf(water, mango)), Order(listOf(bag)))),
+            Customer("Mary", Tula, listOf(Order(listOf(chocolate, bag)))),
+            Customer("Ivan", Perm, listOf(Order(listOf(water, bag)))),
         ))
         assertEquals(setOf(bag), shop.getProductsOrderedByAll())
     }

@@ -1,10 +1,8 @@
 package ru.sber.streams
 
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 
-@Disabled
 class StreamsTest {
 
     @Test

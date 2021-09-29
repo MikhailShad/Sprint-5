@@ -54,41 +54,17 @@ fun Shop.getNumberOfDeliveredProductByCity(): Map<City, Int> {
 }
 
 // 8. Получить соответствие в мапе: город - самый популярный продукт в городе.
-//  Адовая наркомания, но что поделать
-// Для начала добавим маленькое расширение, которое упростит жизнь
-fun <K> MutableMap<K, Int>.accumulateSum(another: Map<K, Int>): MutableMap<K, Int> {
-    another.forEach {
-        if (this.containsKey(it.key)) {
-            this[it.key] = this[it.key]!! + it.value
-        } else {
-            this.putIfAbsent(it.key, it.value)
-        }
-    }
-
-    return this
-}
-
 fun Shop.getMostPopularProductInCity(): Map<City, Product> {
-    return this.customers.asSequence()
-        // По каждому покупателю находим его город и список продуктов с числом покупок
-        .map { customer ->
-            return@map customer.city to customer.orders.asSequence()
+    return this.customers
+        .groupBy { it.city }
+        .mapValues { entry ->
+            entry.value
+                .flatMap { it.orders }
                 .flatMap { it.products }
                 .groupingBy { it }
                 .eachCount()
         }
-        // Группируем данные по городам, теперь надо склеить данные о купленных продуктах
-        .groupingBy { it.first }
-        .aggregateTo(mutableMapOf<City, MutableMap<Product, Int>>()) { _, accumulator, element, first ->
-            // Если результирующая мапа пустая, создадим новую и положим в нее все, что найдется
-            if (first) {
-                return@aggregateTo mutableMapOf<Product, Int>().accumulateSum(element.second)
-            } else {
-                return@aggregateTo accumulator!!.accumulateSum(element.second)
-            }
-        }
-        // Ура, теперь у нас есть мапа городов со списком всех купленных продуктов и их количеством, найдем максимум
-        .map { it.key to it.value.maxByOrNull { entry: Map.Entry<Product, Int> -> entry.value }!!.key }
+        .map { it.key to it.value.maxByOrNull { entry -> entry.value }!!.key }
         .toMap()
 }
 
